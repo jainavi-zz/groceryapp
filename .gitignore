@@ -6,3 +6,6 @@
 
 # Ignore Python .pyc Files
 *.pyc
+
+#Ignore Static Files
+static/*
