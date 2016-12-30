@@ -51,11 +51,14 @@ MIDDLEWARE_CLASSES = [
 ]
 
 ROOT_URLCONF = 'groceryapp.urls'
+ROOT_PATH = os.path.dirname(__file__)
 
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [
+            ROOT_PATH + "/../templates",
+        ],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
