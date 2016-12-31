@@ -9,3 +9,5 @@
 
 #Ignore Static Files
 static/*
+
+.DS_Store
