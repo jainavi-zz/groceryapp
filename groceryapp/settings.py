@@ -91,7 +91,7 @@ else:
     DATABASES = {
         'default': {
             'ENGINE': 'django.db.backends.mysql',
-            'NAME': 'grocerydb',
+            'NAME': 'grocery',
             'USER': 'root',
             'PASSWORD': 'avinash1',
             'HOST': '',
