@@ -7,3 +7,6 @@ def index(request):
 
 def contact(request):
 	return render_to_response("contact.html")
+
+def login(request):
+	return render_to_response("login.html")
