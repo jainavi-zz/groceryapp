@@ -72,11 +72,15 @@
 							</div>
 							<div class="form">
 								<h2>Create an account</h2>
-								<form action="#" method="post">
-									<input type="text" name="Username" placeholder="Username" required=" ">
-									<input type="password" name="Password" placeholder="Password" required=" ">
-									<input type="email" name="Email" placeholder="Email Address" required=" ">
-									<input type="text" name="Phone" placeholder="Phone Number" required=" ">
+								<form id="singup-form" action="" method="post">
+									<input type="text" name="name" placeholder="Full name" required>
+									<input type="email" name="email" placeholder="Email Address" required>
+									<input type="password" name="password" placeholder="Password" required>
+									<input type="text" name="phone" placeholder="Phone Number" required>
+									<input type="text" name="street" placeholder="Street Name" required>
+									<input type="text" name="house_number" placeholder="House Number">
+									<input type="text" name="city" placeholder="City / Town">
+									<input type="text" name="postal_code" placeholder="Postal Code">
 									<input type="submit" value="Register">
 								</form>
 							</div>
@@ -155,5 +159,8 @@
 		<!-- footer -->
 		{% include "footer.html" %}
 		<!-- //footer -->
+		<!-- custom JS-->
+		<script src="{% static 'js/login.js' %}"></script>
+		<!-- //custom JS-->
 	</body>
 </html>
