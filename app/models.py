@@ -1,6 +1,7 @@
 from django.db import models
 from django.utils import timezone
 from django.core.validators import RegexValidator
+import json
 
 class Grocery(models.Model):
 	name = models.CharField(
@@ -34,4 +35,4 @@ class Customer(models.Model):
 			if val: setattr(self, field, val.strip())
 
 	def __str__(self):
-		self.__dict__
+		return str(self.__dict__)
