@@ -21,6 +21,8 @@
 
 		<link href="{% static 'css/bootstrap.css' %}" rel="stylesheet" type="text/css" media="all" />
 		<link href="{% static 'css/style.css' %}" rel="stylesheet" type="text/css" media="all" />
+		<link href="{% static 'css/grocery.css' %}" rel="stylesheet" type="text/css" media="all" />
+		<link href="{% static 'css/cart.css' %}" rel="stylesheet" type="text/css" media="all" />
 
 		<!-- font-awesome icons -->
 		<link href="{% static 'css/font-awesome.css' %}" rel="stylesheet" type="text/css" media="all" />
@@ -258,7 +260,7 @@
 												<h4>$9.00 <span>$11.00</span></h4>
 											</div>
 											<div class="snipcart-details top_brand_home_details">
-												<form action="#" method="post">
+												<form action="#" method="post" class="form-items">
 													<fieldset>
 														<input type="hidden" name="cmd" value="_cart" />
 														<input type="hidden" name="add" value="1" />
@@ -374,23 +376,23 @@
 		<script type="text/javascript">
 			$("#place_order").click(function(e) {
 				var payload = {
-						order_summary: {
-							customer_email: "jain.avi17@gmail.com",
-							delivery_address: "26 A, R.G. KAR ROAD",
-							phone: "123123123123",
-							net_bill: 5.00,
-							net_discount: 0.00,
-							payment_option: "1"
-						},
-						order_description: [
-							{
-								item_id: 1,
-								price: 2.50,
-								discount: 0.00,
-								qty: 2
-							}
-						]
-					};
+					order_summary: {
+						customer_email: "jain.avi17@gmail.com",
+						delivery_address: "26 A, R.G. KAR ROAD",
+						phone: "123123123123",
+						net_bill: 5.00,
+						net_discount: 0.00,
+						payment_option: "1"
+					},
+					order_description: [
+						{
+							item_id: 1,
+							price: 2.50,
+							discount: 0.00,
+							qty: 2
+						}
+					]
+				};
 				$.ajax({
 					type: 'POST',
 					url: '/order',
@@ -404,5 +406,6 @@
 			});
 		</script>
 		<!-- //footer -->
+		<script src="{% static 'js/cart.js' %}"></script>
 	</body>
 </html>
