@@ -88,28 +88,55 @@
     -moz-transition: border linear 0.2s, box-shadow linear 0.2s;
 }
 
+.btn-cart-quantity {
+    border: 1px solid gray;
+    border-radius: 15px;
+    padding: 0;
+    float: left;
+    cursor: pointer;
+    width: 20px;
+    height: 20px;
+    color: #989898;
+    font: 14px ProximaNovaA-Bold;
+    background: #fff;
+    transition-duration: .3s;
+    transition-property: color,background-color;
+}
+
 #modal-cart .cart-details-remove {
 	float: left;
 	width: 7%;
 }
 
 #modal-cart .btn-cart-remove {
-    width: 18px;
-    height: 19px;
-    margin: 2px 0 0;
-    padding: 0;
-    border-radius: 3px;
-    color: #fff;
-    font-size: 13px;
+    font-size: 16px;
     cursor: pointer;
-    background: #fa1818 !important;
-    border: 1px solid #fa1818 !important;
-    opacity: 1 !important;
-    outline: none;
 }
 
 #modal-cart .cart-details-price {
     float: left;
     width: 16%;
     text-align: right;
+}
+
+#modal-cart .cart-subtotal {
+    position: relative;
+    font-size: 16px;
+    font-weight: bold;
+    float: left;
+    top: 50%;
+    -webkit-transform: translateY(50%);
+    -ms-transform: translateY(50%);
+    transform: translateY(50%);
+}
+
+.btn-number {
+    width: 25px;
+    height: 25px;
+}
+
+.btn-modal-cart {
+    -webkit-transform: translateY(-100%);
+    -ms-transform: translateY(-100%);
+    transform: translateY(-100%);
 }

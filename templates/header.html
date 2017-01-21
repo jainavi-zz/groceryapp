@@ -13,7 +13,7 @@
 			<fieldset>
 				<input type="hidden" name="cmd" value="_cart" />
 				<input type="hidden" name="display" value="1" />
-				<input type="submit" name="submit" value="View your cart" class="button" />
+				<input type="button" name="btn-view-cart" id="btn-view-cart" value="View your cart" class="button" />
 			</fieldset>
 		</form>
 	</div>
@@ -81,38 +81,15 @@
 		<div class="modal-content">
 			<div class="modal-header">
 				<h5 class="modal-title">Your Invoice</h5>
-				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+				<button type="button" class="close btn-modal-cart" data-dismiss="modal" aria-label="Close">
 				<span aria-hidden="true">&times;</span>
 				</button>
 			</div>
 			<div class="modal-body">
 				<ul>
-					<li class="cart-item">
-						<div class="cart-details-name">
-							<a class="minicart-name" href="http://127.0.0.1:8000/">dogs food</a>
-							<ul class="cart-attributes">
-								<li>Discount: $1.00 <input type="hidden" name="discount_amount_1" value="1">
-								</li>
-							</ul>
-						</div>
-						<div class="cart-details-quantity">
-							<input class="cart-quantity" data-minicart-idx="0" name="quantity_1" type="text" pattern="[0-9]*" value="1" autocomplete="off">
-						</div>
-						<div class="cart-details-remove">
-							<button type="button" class="btn-cart-remove" data-minicart-idx="0">×</button>
-						</div>
-						<div class="cart-details-price">
-							<span class="minicart-price">$8.00</span>
-						</div>
-						<input type="hidden" name="item_name_1" value="dogs food">
-						<input type="hidden" name="amount_1" value="9">
-						<input type="hidden" name="shipping_1" value="undefined">
-						<input type="hidden" name="shipping2_1" value="undefined">
-					</li>
 				</ul>
 			</div>
 			<div class="modal-footer">
-				<button type="button" class="btn btn-success btn-green">Checkout</button>
 			</div>
 		</div>
 	</div>

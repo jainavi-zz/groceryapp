@@ -8,3 +8,15 @@
     color: #fff;
     position: relative;
 }
+
+.grocery-green {
+	background-color: #84C639;
+}
+
+.grocery-red {
+	background-color: #FA1818;
+}
+
+.mts {
+	margin-top: 5px;
+}
