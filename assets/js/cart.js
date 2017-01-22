@@ -103,7 +103,7 @@ function getCartHTML(item) {
 function getSubTotalHTML(currency, subTotal) {
 	var html = '<div id="cart-subtotal" class="cart-subtotal" data-subtotal="' + subTotal + '">' +
 		'Subtotal: ' + currency + parseFloat(subTotal).toFixed(2) + '</div>';
-	html += '<button type="button" class="btn btn-success btn-green">Checkout</button>';
+	html += '<a href="checkout" type="button" class="btn btn-success btn-green">Checkout</a>';
 
 	return html;
 }

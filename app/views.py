@@ -133,3 +133,10 @@ def order(request):
 				response_data['errors'] = [str(e)]
 
 		return JsonResponse(response_data)
+
+@csrf_exempt
+def checkout(request):
+	if request.method == 'GET':
+		return render_to_response("checkout.html")
+	elif request.method == 'POST':
+		return {}

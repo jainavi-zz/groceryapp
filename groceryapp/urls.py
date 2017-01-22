@@ -25,5 +25,6 @@ urlpatterns = [
 	url(r'^login', views.login, name='login'),
     url(r'^signup', views.signup, name='signup'),
     url(r'^order', views.order, name='order'),
+    url(r'^checkout', views.checkout, name='checkout'),
     url(r'^admin/', admin.site.urls),
 ] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
