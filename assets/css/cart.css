@@ -140,3 +140,14 @@
     -ms-transform: translateY(-100%);
     transform: translateY(-100%);
 }
+
+.input-append {
+    position: relative;
+}
+
+.cart-item-icon {
+    position: absolute;
+    right: 5px;
+    top: 8px
+    display: none;
+}

@@ -1,41 +1,12 @@
 
-$('.form-items').submit(function(e) {
-	e.preventDefault();
+$('.form-items').submit(addItemToCart);
+$('#btn-view-cart').click(displayCartModal);
 
-	var itemDetails = {
-		item_id: $(this).find('input[name=item_id]').val(),
-		item_name: $(this).find('input[name=item_name]').val(),
-		price: $(this).find('input[name=amount]').val(),
-		discount: $(this).find('input[name=discount_amount]').val(),
-		qty: $(this).find('input[name=item_qty]').val(),
-		currency: $(this).find('input[name=currency_symbol]').val()
-	};
+// Delegate events
+$('.modal-body').on('click', '.btn-cart-remove', removeItemFromCart);
+$('.modal-body').on('click', '.btn-number', addSubtractItemQuantity);
 
-	var orderDiscription = localStorage.getItem('cart');
-
-	if (orderDiscription == null) {
-		localStorage.setItem('cart', JSON.stringify([itemDetails]));
-	} else {
-		orderDiscription = JSON.parse(orderDiscription);
-		var itemFound = false;
-		orderDiscription.forEach(function(item) {
-			if (item.item_id == itemDetails.item_id) {
-				item.qty = +item.qty + +itemDetails.qty;
-				itemFound = true;
-				return false;
-			}
-		});
-
-		if (!itemFound) {
-			orderDiscription. push(itemDetails);
-		}
-
-		localStorage.setItem('cart', JSON.stringify(orderDiscription));
-	}
-
-});
-
-$('#btn-view-cart').click(function(e) {
+function displayCartModal(e) {
 	var orderDiscription = localStorage.getItem('cart');
 	var cartHTML = '';
 
@@ -59,8 +30,49 @@ $('#btn-view-cart').click(function(e) {
 		$('#modal-cart .modal-footer').html(subTotalHTML);
 	}
 
+	$('#modal-cart').modal({
+		backdrop: 'static',
+		keyboard: false
+	});
+
 	$('#modal-cart').modal('show');
-});
+}
+
+function addItemToCart(e) {
+	e.preventDefault();
+
+	$('.cart-item-icon').show();
+	var itemDetails = {
+		item_id: $(this).find('input[name=item_id]').val(),
+		item_name: $(this).find('input[name=item_name]').val(),
+		price: $(this).find('input[name=amount]').val(),
+		discount: $(this).find('input[name=discount_amount]').val(),
+		qty: $(this).find('input[name=item_qty]').val(),
+		currency: $(this).find('input[name=currency_symbol]').val()
+	};
+
+	var orderDiscription = localStorage.getItem('cart');
+
+	if (orderDiscription == null) {
+		localStorage.setItem('cart', JSON.stringify([itemDetails]));
+	} else {
+		orderDiscription = JSON.parse(orderDiscription);
+		var itemFound = false;
+		$.each(orderDiscription, function(idx, item) {
+			if (item.item_id == itemDetails.item_id) {
+				item.qty = +item.qty + +itemDetails.qty;
+				itemFound = true;
+				return false;
+			}
+		});
+
+		if (!itemFound) {
+			orderDiscription. push(itemDetails);
+		}
+
+		localStorage.setItem('cart', JSON.stringify(orderDiscription));
+	}
+}
 
 function getEmptyCartHTML() {
 	return '<p style="font-size: 20px; font-style: italic">Your cart is empty. Please add some items</p>';
@@ -112,12 +124,11 @@ function getPlusMinusButtonHTML(item_id, qty) {
 	'</div>';
 }
 
-$('.modal-body').on('click', '.btn-cart-remove', removeItemFromCart);
-
 function removeItemFromCart() {
 	var cart = JSON.parse(localStorage.getItem('cart'));
 
 	if(cart.length == 1) {
+		$('.cart-item-icon').hide();
 		$('#modal-cart .modal-body > ul').html(getEmptyCartHTML());
 		$('#modal-cart .modal-footer').empty();
 		localStorage.removeItem('cart');
@@ -130,15 +141,16 @@ function removeItemFromCart() {
 				subTotal -= (item.price - item.discount) * item.qty;
 				$("#cart-subtotal").data('subtotal', subTotal);
 				$("#cart-subtotal").html('Subtotal: €' + parseFloat(subTotal).toFixed(2));
+				cart.splice(idx, 1);
 				return false;
 			}
 		});
+		localStorage.setItem('cart', JSON.stringify(cart));
 	}
 }
 
-$('.modal-body').on('click', '.btn-number', function() {
-
-    type      	= $(this).attr('data-type');
+function addSubtractItemQuantity() {
+	type      	= $(this).attr('data-type');
     var input 	= $("input[name=item-qty]");
     var item_id = $(this).data('item_id');
     var currentVal = parseInt(input.val());
@@ -151,7 +163,7 @@ $('.modal-body').on('click', '.btn-number', function() {
 
             if(currentVal > input.attr('min')) {
                 input.val(currentVal - 1).change();
-                orderDiscription.forEach(function(item) {
+                $.each(orderDiscription, function(idx, item) {
 					if (item.item_id == item_id) {
 						item.qty = +item.qty - 1;
 						subTotal -= (item.price - item.discount);
@@ -169,7 +181,7 @@ $('.modal-body').on('click', '.btn-number', function() {
         } else if(type == 'plus') {
             if(currentVal < input.attr('max')) {
                 input.val(currentVal + 1).change();
-                orderDiscription.forEach(function(item) {
+                $.each(orderDiscription, function(idx, item) {
 					if (item.item_id == item_id) {
 						item.qty = +item.qty + 1;
 						subTotal += (item.price - item.discount);
@@ -188,7 +200,7 @@ $('.modal-body').on('click', '.btn-number', function() {
     } else {
         input.val(0);
     }
-});
+}
 
 $('.modal-body').on('focus', '.input-number', function() {
    $(this).data('oldValue', $(this).val());
