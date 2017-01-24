@@ -148,6 +148,5 @@
 .cart-item-icon {
     position: absolute;
     right: 5px;
-    top: 8px;
-    display: none;
+    top: 8px !important;
 }

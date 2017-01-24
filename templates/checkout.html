@@ -22,6 +22,8 @@
 		<link href="{% static 'css/bootstrap.css' %}" rel="stylesheet" type="text/css" media="all" />
 		<link href="{% static 'css/style.css' %}" rel="stylesheet" type="text/css" media="all" />
 		<link href="{% static 'css/grocery.css' %}" rel="stylesheet" type="text/css" media="all" />
+		<link href="{% static 'css/cart.css' %}" rel="stylesheet" type="text/css" media="all" />
+		<link href="{% static 'css/checkout.css' %}" rel="stylesheet" type="text/css" media="all" />
 
 		<!-- font-awesome icons -->
 		<link href="{% static 'css/font-awesome.css' %}" rel="stylesheet" type="text/css" media="all" />
@@ -52,10 +54,76 @@
 		{% include "header.html" %}
 		<!-- //header -->
 		<!-- order overview -->
-		<p>Order Overview</p>
+		<div class="container">
+			<div class="row row-cart-header mmT pmA">
+				<div class="col-md-6">
+					<span>ITEM DESCRIPTION</span>
+				</div>
+				<div class="col-md-6">
+					<div class="row">
+						<div class="col-md-3">
+							<span>UNIT PRICE</span>
+						</div>
+						<div class="col-md-3">
+							<span>QUANTITY</span>
+						</div>
+						<div class="col-md-3">
+							<span>SUBTOTAL</span>
+						</div>
+						<div class="col-md-3">
+							<span>DISCOUNT</span>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="row-cart">
+			</div>
+		</div>
 		<!-- //order overview -->
+		<!-- place order -->
+		<div class="container">
+			<div class="row mmT pmA">
+				<div class="col-md-6">
+				</div>
+				<div class="col-md-6 block-order-bill">
+					<div class="row">
+						<div class="col-md-10 col-subtotal plA">
+							<div class="row row-subtotal">
+								<div class="col-md-6">
+									<p>Subtotal:</p>
+								</div>
+								<div class="col-md-6 taR">
+									<p id="order-subtotal"></p>
+								</div>
+							<hr>
+							</div>
+							<div class="row row-total">
+								<div class="col-md-6">
+									<b>Total:</b>
+								</div>
+								<div class="col-md-6 taR">
+									<b id="order-total">€ 25.00</b>
+								</div>
+							</div>
+						</div>
+						<div class="col-md-2 col-total-discount">
+							<span>You saved!</span>
+							<span>€ 2.00</span>
+						</div>
+					</div>
+					<div class="row row-place-order">
+						<hr>
+						<button class="btn btn-success pull-right grocery-green">Place Order</button>
+						<span class="icon icon-navigating-right"></span>
+					</div>
+				</div>
+			</div>
+		</div>
+		<!-- //place order -->
 		<!-- footer -->
 		{% include "footer.html" %}
 		<!--//footer-->
+		<script src="{% static 'js/cart.js' %}"></script>
+		<script src="{% static 'js/checkout.js' %}"></script>
 	</body>
 </html>

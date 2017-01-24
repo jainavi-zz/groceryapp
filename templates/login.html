@@ -65,6 +65,7 @@
 							<div class="form">
 								<h2>Login to your account</h2>
 								<form action="#" method="post">
+									{% csrf_token %}
 									<input type="text" name="Username" placeholder="Username" required=" ">
 									<input type="password" name="Password" placeholder="Password" required=" ">
 									<input type="submit" value="Login">
@@ -73,6 +74,7 @@
 							<div class="form">
 								<h2>Create an account</h2>
 								<form id="singup-form" action="" method="post">
+									{% csrf_token %}
 									<input type="text" name="name" placeholder="Full name" required>
 									<input type="email" name="email" placeholder="Email Address" required>
 									<input type="password" name="password" placeholder="Password" required>
@@ -148,6 +150,7 @@
 				</div>
 				<div class="w3agile_newsletter_right">
 					<form action="#" method="post">
+						{% csrf_token %}
 						<input type="email" name="Email" value="Email" onfocus="this.value = '';" onblur="if (this.value == '') {this.value = 'Email';}" required="">
 						<input type="submit" value="subscribe now">
 					</form>

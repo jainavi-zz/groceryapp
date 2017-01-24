@@ -1,0 +1,78 @@
+.row-cart-header {
+	color: #fff;
+	background: #555;
+}
+
+.row-cart-items {
+    padding: 10px;
+    font: 400 13px/14px Roboto Slab,serif;
+    color: #222;
+    display: block;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    font-size: 18px;
+    text-transform: capitalize;
+}
+
+.input-number {
+    width: 47px;
+    height: 25px;
+    text-align: center;
+}
+
+.btn-quantity {
+	margin-right: 15px;
+	color: white;
+	background-color: #ccc;
+}
+
+.block-order-bill {
+    background: linear-gradient(180deg, #fff 60%, #f0f0f0 99%);
+    border: 1px solid #a2a2a2;
+    box-shadow: 2px 2px 4px #ccc;
+    border-radius: 5px;
+    position: relative;
+    z-index: 2;
+}
+
+.row-subtotal {
+    font: 400 13px/13px Lato,sans-serif;
+    color: #555;
+    margin: 0;
+    padding: 0;
+}
+
+.col-subtotal {
+    border-right: 1px solid #ccc;
+}
+
+.col-subtotal hr {
+    margin-top: 30px;
+}
+
+.col-total-discount {
+    height: 52px;
+    background: url(../img/piggy.png) no-repeat center 21px;
+    font: 700 14px/14px Roboto Slab,serif;
+    color: #e7685d;
+    text-align: center;
+    padding-top: 57px;
+}
+
+.row-total b {
+    font: 400 22px/22px Roboto Slab,serif;
+    color: #444;
+    display: block;
+    padding: 0px 10px 0px 10px; 
+}
+
+.row-place-order {
+    padding: 0px 20px 20px 20px;
+}
+
+.row-place-order button {
+    font: 400 19px Roboto Slab,serif;
+    border-radius: 5px;
+    box-shadow: 3px 2px 5px #ccc;
+}

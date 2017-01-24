@@ -1,3 +1,10 @@
+$(document).ready(function() {
+	if (localStorage.getItem('cart') == null) {
+		$('.cart-item-icon').hide();
+	} else {
+		$('.cart-item-icon').show();
+	}
+})
 
 $('.form-items').submit(addItemToCart);
 $('#btn-view-cart').click(displayCartModal);
@@ -90,7 +97,7 @@ function getCartHTML(item) {
 			getPlusMinusButtonHTML(item.item_id, item.qty) +
 		'</div>' +
 		'<div class="cart-details-remove">' +
-			'<span class="glyphicon glyphicon-trash btn-cart-remove mts" aria-hidden="true" data-item_id="' + item.item_id + '"></span>' +
+			'<span class="glyphicon glyphicon-trash btn-cart-remove msT" aria-hidden="true" data-item_id="' + item.item_id + '"></span>' +
 		'</div>' +
 		'<div class="cart-details-price">' +
 			'<span class="minicart-price">' + item.currency + item.price + '</span>' +

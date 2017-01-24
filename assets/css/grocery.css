@@ -17,6 +17,46 @@
 	background-color: #FA1818;
 }
 
-.mts {
+.msT {
 	margin-top: 5px;
+}
+
+.mmT {
+	margin-top: 10px;
+}
+
+.mnB {
+	margin-bottom: 0px;
+}
+
+.pnT {
+	padding-top: 0px;
+}
+
+.pnA {
+	padding: 0px;
+}
+
+.psA {
+	padding: 5px;
+}
+
+.pmA {
+	padding: 10px;
+}
+
+.plA {
+	padding: 15px;
+}
+
+.pxlA {
+	padding: 20px;
+}
+
+.taR {
+	text-align: right;
+}
+
+hr {
+	border-top: 1px solid #ccc;
 }
