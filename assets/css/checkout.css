@@ -76,3 +76,16 @@
     border-radius: 5px;
     box-shadow: 3px 2px 5px #ccc;
 }
+
+.row-place-order a {
+    font: 400 19px Roboto Slab,serif;
+    border-radius: 5px;
+    box-shadow: 3px 2px 5px #ccc;
+    text-transform: uppercase;
+}
+
+.row-place-order a > span {
+    top: 3px;
+    left: 5px;
+    padding-right: 5px;
+}

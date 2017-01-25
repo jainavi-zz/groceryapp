@@ -7,19 +7,23 @@ function renderCart() {
 
 	var cartTableHTML = '';
 	var subTotal = 0.00;
+	var totalDiscount = 0.00;
 	var currency = '€';
 
 	if (cart && cart.length) {
 		$.each(cart, function(idx, item) {
 			cartTableHTML += getCartTableHTML(item);
 			subTotal += (item.price - item.discount) * item.qty;
+			totalDiscount += item.discount * item.qty;
 		});
 	}
 
 	$('.row-cart').html(cartTableHTML);
 	$('#order-subtotal').html(currency + ' ' + parseFloat(subTotal).toFixed(2));	
 	$('#order-total').html(currency + ' ' + parseFloat(subTotal).toFixed(2));
+	$('#total-discount').html(currency + ' ' + parseFloat(totalDiscount).toFixed(2));
 	$('#order-subtotal').data('subtotal', subTotal);
+	$('#total-discount').data('totaldiscount', totalDiscount);
 }
 
 function getCartTableHTML(item) {
@@ -76,6 +80,7 @@ function addSubtractItemQuantity() {
     if (!isNaN(currentVal)) {
     	var cart = JSON.parse(localStorage.getItem('cart'));
     	var subTotal = parseFloat($("#order-subtotal").data('subtotal'));
+		var totalDiscount = parseFloat($("#total-discount").data('totaldiscount'));
 
         if(type == 'minus') {
 
@@ -84,12 +89,15 @@ function addSubtractItemQuantity() {
                 $.each(cart, function(idx, item) {
 					if (item.item_id == item_id) {
 						item.qty = +item.qty - 1;
-						subTotal -= (item.price - item.discount);						
+						subTotal -= (item.price - item.discount);
+						totalDiscount -= item.discount;
 						$(itemSubTotalEl).html(item.currency + ' ' + parseFloat((item.price - item.discount) * item.qty).toFixed(2));
 						$(itemDiscountEl).html(item.currency + ' ' + parseFloat(item.discount * item.qty).toFixed(2));
 						$("#order-subtotal").html(item.currency + ' ' + parseFloat(subTotal).toFixed(2));
 						$("#order-total").html(item.currency + ' ' + parseFloat(subTotal).toFixed(2));
+						$('#total-discount').html(item.currency + ' ' + parseFloat(totalDiscount).toFixed(2));
 						$("#order-subtotal").data('subtotal', subTotal);
+						$('#total-discount').data('totaldiscount', totalDiscount);
 						return false;
 					}
 				});
@@ -105,12 +113,15 @@ function addSubtractItemQuantity() {
                 $.each(cart, function(idx, item) {
 					if (item.item_id == item_id) {
 						item.qty = +item.qty + 1;
-						subTotal += (item.price - item.discount);						
+						subTotal += (item.price - item.discount);
+						totalDiscount += +item.discount;
 						$(itemSubTotalEl).html(item.currency + ' ' + parseFloat((item.price - item.discount) * item.qty).toFixed(2));
 						$(itemDiscountEl).html(item.currency + ' ' + parseFloat(item.discount * item.qty).toFixed(2));
 						$("#order-subtotal").html(item.currency + ' ' + parseFloat(subTotal).toFixed(2));
-						$("#order-total").html(item.currency + ' ' + parseFloat(subTotal).toFixed(2));						
+						$("#order-total").html(item.currency + ' ' + parseFloat(subTotal).toFixed(2));
+						$('#total-discount').html(item.currency + ' ' + parseFloat(totalDiscount).toFixed(2));
 						$("#order-subtotal").data('subtotal', subTotal);
+						$('#total-discount').data('totaldiscount', totalDiscount);
 						return false;
 					}
 				});
