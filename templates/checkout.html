@@ -84,6 +84,51 @@
 		<div class="container">
 			<div class="row mmT pmA">
 				<div class="col-md-6">
+					<p class="pmA txC">Delivery address</p>
+					<form class="form-horizontal form-delivery">
+						<div class="form-group">
+							<label class="col-sm-2 control-label" for="customer_name">Name</label>
+							<div class="col-sm-10">
+								<input type="text" class="form-control" id="customer_name" placeholder="Ex. John Doe" required>
+							</div>
+						</div>
+						<div class="form-group">
+							<label class="col-sm-2 control-label" for="customer_email">Email</label>
+							<div class="col-sm-10">
+								<input type="email" class="form-control" id="customer_email" aria-describedby="emailHelp" placeholder="Ex. abc@xyz.com" required>
+							</div>
+						</div>
+						<div class="form-group">
+							<label class="col-sm-2 control-label" for="customer_phone">Mobile</label>
+							<div class="col-sm-10">
+								<input type="tel" class="form-control" id="customer_phone" placeholder="Ex. 0123123123123" required>
+							</div>
+						</div>
+						<div class="form-group">
+							<label class="col-sm-2 control-label" for="street">Street</label>
+							<div class="col-sm-10">
+								<input type="text" class="form-control" id="street" placeholder="Street">
+							</div>
+						</div>
+						<div class="form-group">
+							<label class="col-sm-2 control-label" for="street">House</label>
+							<div class="col-sm-10">
+								<input type="text" class="form-control" id="house" placeholder="House number / Building">
+							</div>
+						</div>
+						<div class="form-group">
+							<label class="col-sm-2 control-label" for="city">City</label>
+							<div class="col-sm-10">
+								<input type="text" class="form-control" id="city" placeholder="City">
+							</div>
+						</div>
+						<div class="form-group">
+							<label class="col-sm-2 control-label" for="postal_code">Postal</label>
+							<div class="col-sm-10">
+								<input type="text" class="form-control" id="postal_code" placeholder="Post code">
+							</div>
+						</div>
+					</form>
 				</div>
 				<div class="col-md-6 block-order-bill">
 					<div class="row">
@@ -117,7 +162,7 @@
 							Continue Shopping
 							<span class="glyphicon glyphicon-circle-arrow-right" aria-hidden="true"></span>
 						</a>
-						<button class="btn btn-success pull-right grocery-green">Place Order</button>
+						<button id="btn-place-order" class="btn btn-success pull-right grocery-green">Place Order</button>
 					</div>
 				</div>
 			</div>

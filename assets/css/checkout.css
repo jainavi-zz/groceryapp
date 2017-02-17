@@ -89,3 +89,7 @@
     left: 5px;
     padding-right: 5px;
 }
+
+.form-delivery label {
+    font-weight: 500;
+}

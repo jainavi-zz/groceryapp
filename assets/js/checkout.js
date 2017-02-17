@@ -2,6 +2,39 @@ $(document).ready(renderCart);
 
 $('.row-cart').on('click', '.btn-number', addSubtractItemQuantity);
 
+$('.btn-place-order').click(placeOrder);
+
+function placeOrder() {
+	var payload = {
+		order_summary: {
+			customer_email: "jain.avi17@gmail.com",
+			delivery_address: "26 A, R.G. KAR ROAD",
+			phone: "123123123123",
+			net_bill: 5.00,
+			net_discount: 0.00,
+			payment_option: "1"
+		},
+		order_description: [
+			{
+				item_id: 1,
+				price: 2.50,
+				discount: 0.00,
+				qty: 2
+			}
+		]
+	};
+	$.ajax({
+		type: 'POST',
+		url: '/order',
+		data: JSON.stringify(payload),
+		contentType: 'application/json',
+		dataType: 'json',
+		success: function(response) {
+			console.log(response)
+		}
+	});
+}
+
 function renderCart() {
 	var cart = JSON.parse(localStorage.getItem('cart'));
 
