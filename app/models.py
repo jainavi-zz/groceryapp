@@ -73,6 +73,7 @@ class OnlineOrder(models.Model):
 	net_discount 		= models.FloatField(default=0.00,
 							validators=[MinValueValidator(0.00)]
 						)
+	currency_code		= models.CharField(max_length=3, default='EUR')
 	payment_option 		= models.CharField(max_length=1, choices=PAYMENT_OPTION)
 	placed_at 			= models.DateTimeField(default=timezone.now)
 	status 				= models.CharField(max_length=1, choices=ORDER_STATUS, default=str(1))

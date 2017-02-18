@@ -2,36 +2,122 @@ $(document).ready(renderCart);
 
 $('.row-cart').on('click', '.btn-number', addSubtractItemQuantity);
 
-$('.btn-place-order').click(placeOrder);
+$('#btn-place-order').click(placeOrder);
 
 function placeOrder() {
-	var payload = {
-		order_summary: {
-			customer_email: "jain.avi17@gmail.com",
-			delivery_address: "26 A, R.G. KAR ROAD",
-			phone: "123123123123",
-			net_bill: 5.00,
-			net_discount: 0.00,
-			payment_option: "1"
-		},
-		order_description: [
-			{
-				item_id: 1,
-				price: 2.50,
-				discount: 0.00,
-				qty: 2
+
+	$('.form-delivery').submit();
+
+	var isValid = $('.form-delivery').has('.has-error').length == 0;
+	if (isValid) {
+		var street = $('#street').val();
+		var house_number = $('#house').val();
+		var city = $('#city').val();
+		var postal_code = $('#postal_code').val();
+		var delivery_address = street + ' ' + house_number + ', ' + city + ' - ' + postal_code;
+
+		var order_description = JSON.parse(localStorage.getItem('cart'));
+		order_description.forEach(function(item) { delete item.item_name; });
+
+		var payload = {
+			order_summary: {
+				customer_email: $('#customer_email').val(),
+				delivery_address: delivery_address,
+				phone: $('#phone').val(),
+				net_bill: $('#order-subtotal').data('subtotal'),
+				net_discount: $('#total-discount').data('totaldiscount'),
+				currency_code: 'EUR',
+				payment_option: "1"
+			},
+			order_description: order_description
+		};
+
+		$.ajax({
+			type: 'POST',
+			url: '/order',
+			data: JSON.stringify(payload),
+			contentType: 'application/json',
+			dataType: 'json',
+			success: function(response) {
+				if (response.status == 'OK') {
+					localStorage.removeItem('cart');
+					//TODO: Show success message;
+				} else {
+
+				}
 			}
-		]
-	};
-	$.ajax({
-		type: 'POST',
-		url: '/order',
-		data: JSON.stringify(payload),
-		contentType: 'application/json',
-		dataType: 'json',
-		success: function(response) {
-			console.log(response)
-		}
+		});
+	}
+}
+
+function validateDeliveryForm() {
+	$('.form-delivery').bootstrapValidator({
+		feedbackIcons: {
+            valid: 'glyphicon glyphicon-ok',
+            invalid: 'glyphicon glyphicon-remove',
+            validating: 'glyphicon glyphicon-refresh'
+        },
+        fields: {
+        	customer_name: {
+        		validators: {
+        			notEmpty: {
+        				message: 'The full name is required and cannot be empty'
+        			}
+        		}
+        	},
+        	customer_email: {
+        		validators: {
+        			notEmpty: {
+        				message: 'The email address is required and cannot be empty'
+        			},
+        			emailAddress: {
+                        message: 'The email address is not valid'
+                    }
+        		}
+        	},
+        	phone: {
+        		validators: {
+        			notEmpty: {
+        				message: 'Please supply your phone number'
+        			},
+        			phone: {
+                        country: 'DE',
+                        message: 'Please supply a vaild phone number with area code'
+                    }
+        		}
+        	},
+        	street: {
+        		validators: {
+        			stringLength: {
+                        min: 6,
+                    },
+                    notEmpty: {
+                        message: 'Please supply your street address'
+                    }
+        		}
+        	},
+        	city: {
+                validators: {
+                     stringLength: {
+                        min: 4,
+                    },
+                    notEmpty: {
+                        message: 'Please supply your city'
+                    }
+                }
+            },
+            postal_code: {
+                validators: {
+                    notEmpty: {
+                        message: 'Please supply your zip code'
+                    },
+                    zipCode: {
+                        country: 'DE',
+                        message: 'Please supply a vaild zip code'
+                    }
+                }
+            }
+        }
 	});
 }
 
@@ -45,7 +131,7 @@ function renderCart() {
 
 	if (cart && cart.length) {
 		$.each(cart, function(idx, item) {
-			cartTableHTML += getCartTableHTML(item);
+			cartTableHTML += getCartTableHTML(item, currency);
 			subTotal += (item.price - item.discount) * item.qty;
 			totalDiscount += item.discount * item.qty;
 		});
@@ -57,9 +143,11 @@ function renderCart() {
 	$('#total-discount').html(currency + ' ' + parseFloat(totalDiscount).toFixed(2));
 	$('#order-subtotal').data('subtotal', subTotal);
 	$('#total-discount').data('totaldiscount', totalDiscount);
+
+	validateDeliveryForm();
 }
 
-function getCartTableHTML(item) {
+function getCartTableHTML(item, currency) {
 	var html = '<div class="row row-cart-items mmT">' +
 		'<div class="col-md-6">' +
 			'<span>' + item.item_name + '</span>' +
@@ -67,16 +155,16 @@ function getCartTableHTML(item) {
 		'<div class="col-md-6">' +
 			'<div class="row">' +
 				'<div class="col-md-3">' +
-					'<span>' + item.currency + ' ' + parseFloat(item.price).toFixed(2) + '</span>' +
+					'<span>' + currency + ' ' + parseFloat(item.price).toFixed(2) + '</span>' +
 				'</div>' +
 				'<div class="col-md-3 block-change-quantity">' +
 					getPlusMinusButtonHTML(item.item_id, item.qty) +
 				'</div>' +
 				'<div class="col-md-3">' +
-					'<span class="item-subtotal">' + item.currency + ' ' + parseFloat((item.price - item.discount) * item.qty).toFixed(2) + '</span>' +
+					'<span class="item-subtotal">' + currency + ' ' + parseFloat((item.price - item.discount) * item.qty).toFixed(2) + '</span>' +
 				'</div>' +
 				'<div class="col-md-3">' +
-					'<span class="item-discount">' + item.currency + ' ' + parseFloat(item.discount * item.qty).toFixed(2) + '</span>' +
+					'<span class="item-discount">' + currency + ' ' + parseFloat(item.discount * item.qty).toFixed(2) + '</span>' +
 				'</div>' +
 			'</div>' +
 		'</div>' +

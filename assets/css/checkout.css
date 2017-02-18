@@ -93,3 +93,12 @@
 .form-delivery label {
     font-weight: 500;
 }
+
+.block-order-bill h2 {
+    font-size: 16px;
+    font-weight: 400;
+}
+
+.block-order-bill small {
+    color: darkolivegreen;
+}

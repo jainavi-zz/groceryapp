@@ -24,7 +24,7 @@ function displayCartModal(e) {
 		var subTotal = 0.00;
 		var currency = '€';
 		items.forEach(function(item) {
-			cartHTML += getCartHTML(item);
+			cartHTML += getCartHTML(item, currency);
 			subTotal += (item.price - item.discount) * item.qty;
 		});
 
@@ -54,8 +54,7 @@ function addItemToCart(e) {
 		item_name: $(this).find('input[name=item_name]').val(),
 		price: $(this).find('input[name=amount]').val(),
 		discount: $(this).find('input[name=discount_amount]').val(),
-		qty: $(this).find('input[name=item_qty]').val(),
-		currency: $(this).find('input[name=currency_symbol]').val()
+		qty: $(this).find('input[name=item_qty]').val()
 	};
 
 	var orderDiscription = localStorage.getItem('cart');
@@ -85,7 +84,7 @@ function getEmptyCartHTML() {
 	return '<p style="font-size: 20px; font-style: italic">Your cart is empty. Please add some items</p>';
 }
 
-function getCartHTML(item) {
+function getCartHTML(item, currency) {
 	var html = '<li class="cart-item">' +
 		'<div class="cart-details-name">' +
 			'<a class="minicart-name" href="http://127.0.0.1:8000/">' + item.item_name + '</a>' +
@@ -100,7 +99,7 @@ function getCartHTML(item) {
 			'<span class="glyphicon glyphicon-trash btn-cart-remove msT" aria-hidden="true" data-item_id="' + item.item_id + '"></span>' +
 		'</div>' +
 		'<div class="cart-details-price">' +
-			'<span class="minicart-price">' + item.currency + item.price + '</span>' +
+			'<span class="minicart-price">' + currency + ' ' + item.price + '</span>' +
 		'</div>'
 	'</li>';
 
