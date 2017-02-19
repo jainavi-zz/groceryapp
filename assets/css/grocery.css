@@ -49,12 +49,20 @@
 	padding: 0px;
 }
 
+.pnR {
+	padding-right: 0px;
+}
+
 .psA {
 	padding: 5px;
 }
 
 .pmA {
 	padding: 10px;
+}
+
+.pmT {
+	padding-top: 10px;
 }
 
 .plA {

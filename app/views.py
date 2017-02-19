@@ -140,3 +140,7 @@ def checkout(request):
 		return render_to_response("checkout.html")
 	elif request.method == 'POST':
 		return {}
+
+def trackmyorder(request):
+	if request.method == 'GET':
+		return render_to_response("trackmyorder.html")
