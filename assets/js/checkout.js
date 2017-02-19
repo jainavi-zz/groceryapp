@@ -10,6 +10,7 @@ function placeOrder() {
 
 	var isValid = $('.form-delivery').has('.has-error').length == 0;
 	if (isValid) {
+		$('#btn-place-order > img').removeClass('hide');
 		var street = $('#street').val();
 		var house_number = $('#house').val();
 		var city = $('#city').val();
@@ -39,11 +40,17 @@ function placeOrder() {
 			contentType: 'application/json',
 			dataType: 'json',
 			success: function(response) {
+				$('#btn-place-order > img').addClass('hide');
 				if (response.status == 'OK') {
+					$('.order-overview').remove();
+					$('.container-order-status').css('background-color', '#84C639');
+					$('.container-order-status').removeClass('hide');
+					$('.block-order-status-ok').slideDown('slow');
 					localStorage.removeItem('cart');
-					//TODO: Show success message;
 				} else {
-
+					$('.container-order-status').css('background-color', '#FA1818');
+					$('.container-order-status').removeClass('hide');
+					$('.block-order-status-fail').slideDown('slow');
 				}
 			}
 		});
@@ -53,8 +60,8 @@ function placeOrder() {
 function validateDeliveryForm() {
 	$('.form-delivery').bootstrapValidator({
 		feedbackIcons: {
-            valid: 'glyphicon glyphicon-ok',
-            invalid: 'glyphicon glyphicon-remove',
+            valid: 'glyphicon glyphicon-ok-circle',
+            invalid: 'glyphicon glyphicon-remove-cricle',
             validating: 'glyphicon glyphicon-refresh'
         },
         fields: {
@@ -124,6 +131,13 @@ function validateDeliveryForm() {
 function renderCart() {
 	var cart = JSON.parse(localStorage.getItem('cart'));
 
+	if (!cart) {
+		$('.order-header').remove();
+		$('.order-overview').remove();
+		renderEmptyCardWarning();
+		return;
+	}
+
 	var cartTableHTML = '';
 	var subTotal = 0.00;
 	var totalDiscount = 0.00;
@@ -145,6 +159,10 @@ function renderCart() {
 	$('#total-discount').data('totaldiscount', totalDiscount);
 
 	validateDeliveryForm();
+}
+
+function renderEmptyCardWarning() {
+	$('.container-empty-basket').removeClass('hide');
 }
 
 function getCartTableHTML(item, currency) {

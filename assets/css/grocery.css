@@ -21,8 +21,16 @@
 	margin-top: 5px;
 }
 
+.msL {
+	margin-left: 5px;
+}
+
 .mmT {
 	margin-top: 10px;
+}
+
+.mlB {
+	margin-bottom: 20px;
 }
 
 .mmB {
@@ -69,6 +77,14 @@ hr {
 	border-top: 1px solid #ccc;
 }
 
+.fw1 {
+	font-weight: 100;
+}
+
 .fw3 {
 	font-weight: 300;
+}
+
+.fw4 {
+	font-weight: 400;
 }

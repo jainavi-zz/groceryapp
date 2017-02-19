@@ -55,8 +55,33 @@
 		<!-- header -->
 		{% include "header.html" %}
 		<!-- //header -->
+		<!-- empty cart-->
+		<div class="container container-empty-basket hide mmB">
+			<p class="fw4">
+				Your cart is empty!
+				<a href="/" class="btn btn-primary">
+					Continue Shopping
+					<span class="glyphicon glyphicon-circle-arrow-right" aria-hidden="true"></span>
+				</a>
+			</p>
+		</div>
+		<!-- //empty cart-->
+		<!-- order status -->
+		<div class="container mmT mmB container-order-status hide">
+			<div class="block-order-status-ok">
+				<h2 class="mlB">Thank you for order!</h2>
+				<h4 class="fw1">Order number is: 123123</h4>
+				<small class="mmT">You will receive an email confirmation shortly at abc.xyz@com</small><br />
+				<small class="mmT">You may track your order <a href="#">here</a></small>
+			</div>
+			<div class="block-order-status-fail">
+				<h2 class="mlB">Oops something went wrong!</h2>
+				<small class="fw1">You may trying placing order again or call us at (+49) 176 42971087 to place order on call.</small>
+			</div>
+		</div>
+		<!-- //order status-->
 		<!-- order overview -->
-		<div class="container">
+		<div class="container order-header">
 			<div class="row row-cart-header mmT pmA">
 				<div class="col-md-6">
 					<span>ITEM DESCRIPTION</span>
@@ -83,7 +108,7 @@
 		</div>
 		<!-- //order overview -->
 		<!-- place order -->
-		<div class="container">
+		<div class="container order-overview">
 			<div class="row mmT pmA">
 				<div class="col-md-6 block-order-bill">
 					<h2 class="pmA txC">Delivery address</h2>
@@ -133,7 +158,7 @@
 					</form>
 					<small class="pull-right mmB fw3">*currently we support only cash on delivery!</small>
 				</div>
-				<div class="col-md-6 block-order-bill">
+				<div class="col-md-6 block-order-bill mmB">
 					<div class="row">
 						<div class="col-md-10 col-subtotal plA">
 							<div class="row row-subtotal">
@@ -165,7 +190,9 @@
 							Continue Shopping
 							<span class="glyphicon glyphicon-circle-arrow-right" aria-hidden="true"></span>
 						</a>
-						<button id="btn-place-order" class="btn btn-success pull-right grocery-green">Place Order</button>
+						<button id="btn-place-order" class="btn btn-success pull-right grocery-green">Place Order
+							<img src="{% static 'img/loading.gif' %}" class="msL hide" alt="placing...">
+						</button>
 					</div>
 				</div>
 			</div>

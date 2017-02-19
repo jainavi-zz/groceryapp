@@ -102,3 +102,20 @@
 .block-order-bill small {
     color: darkolivegreen;
 }
+
+.block-order-status-ok {
+    display: none;
+    padding: 10px 0px 10px 0px;
+}
+
+.block-order-status-fail {
+    display: none;
+    padding: 10px 0px 10px 0px;
+}
+
+.container-order-status {
+    background-color: #84C639;
+    border: 1px solid #a2a2a2;
+    border-radius: 5px;
+    color: #fff;
+}
