@@ -144,3 +144,9 @@ def checkout(request):
 def trackmyorder(request):
 	if request.method == 'GET':
 		return render_to_response("trackmyorder.html")
+	elif request.method == 'POST':
+		data = json.loads(request.body.decode('utf-8'))
+
+		email = data['email']
+		order_id = data['order_id']
+		return {}

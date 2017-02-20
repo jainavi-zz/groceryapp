@@ -18,6 +18,7 @@
 		<link href="{% static 'css/grocery.css' %}" rel="stylesheet" type="text/css" media="all" />
 		<link href="{% static 'css/cart.css' %}" rel="stylesheet" type="text/css" media="all" />
 		<link href="{% static 'css/trackmyorder.css' %}" rel="stylesheet" type="text/css" media="all" />
+		<link rel="stylesheet" href="http://cdnjs.cloudflare.com/ajax/libs/jquery.bootstrapvalidator/0.5.3/css/bootstrapValidator.min.css"/>
 
 		<!-- font-awesome icons -->
 		<link href="{% static 'css/font-awesome.css' %}" rel="stylesheet" type="text/css" media="all" />
@@ -49,23 +50,49 @@
 		<!-- //header -->
 		<div class="container mmB pmA">
 			<p>TRACK YOUR ORDER HERE</p>
-			<div class="row mmT row-track-order">
-				<div class="col-md-5 pnR">
-					<input type="email" class="form-control" placeholder="Email">
+			<form id="form-track-order" class="form-inline row mmT">
+				{% csrf_token %}
+				<div class="form-group col-md-5 pnR">
+					<input type="email" name="email" class="form-control full-width" placeholder="Email">
 				</div>
-				<div class="col-md-5 pnR">
-					<input type="text" class="form-control" placeholder="#Order no">
+				<div class="form-group col-md-5 pnR">
+					<input type="text" name="order_id" class="form-control full-width" placeholder="Order #">
 				</div>
-				<div class="col-md-2">
-					<button type="button" class="btn btn-success btn-track-order">Track</button>
+				<button type="submit" class="btn btn-success  mlL btn-track-order">Track</button>
+			</form>
+			<div class="row row-order-details mlT">
+				<div class="col-md-12">
+					<div class="panel panel-default">
+						<div class="panel-heading">
+							<h3 class="panel-title"><strong>Order summary</strong></h3>
+						</div>
+						<div class="panel-body">
+							<div class="table-responsive">
+								<table class="table table-condensed mnB">
+									<thead>
+										<tr>
+											<td><strong>Order #</strong></td>
+											<td><strong>Billed To</strong></td>
+											<td><strong>Order Date</strong></td>
+											<td><strong>Delivery At</strong></td>
+											<td><strong>Status</strong></td>
+											<td><strong>Total bill</strong></td>
+										</tr>
+									</thead>
+									<tbody>
+									</tbody>
+								</table>
+							</div>
+						</div>
+					</div>
 				</div>
-			</div>
-			<div class="row-order-details">
 			</div>
 		</div>
 		<!-- footer -->
 		{% include "footer.html" %}
 		<!--//footer-->
+		<script type="text/javascript" src="http://cdnjs.cloudflare.com/ajax/libs/jquery.bootstrapvalidator/0.5.3/js/bootstrapValidator.min.js"></script>
+		<script src="{% static 'js/grocery.js' %}"></script>
 		<script src="{% static 'js/cart.js' %}"></script>
 		<script src="{% static 'js/trackmyorder.js' %}"></script>
 	</body>

@@ -25,11 +25,23 @@
 	margin-left: 5px;
 }
 
+.mlL {
+	margin-left: 15px;
+}
+
 .mmT {
 	margin-top: 10px;
 }
 
+.mlT {
+	margin-top: 15px;
+}
+
 .mlB {
+	margin-bottom: 15px;
+}
+
+.mxlB {
 	margin-bottom: 20px;
 }
 
@@ -95,4 +107,8 @@ hr {
 
 .fw4 {
 	font-weight: 400;
+}
+
+.full-width {
+	width: 100% !important;
 }

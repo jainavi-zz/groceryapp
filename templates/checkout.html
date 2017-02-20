@@ -63,13 +63,13 @@
 		<!-- order status -->
 		<div class="container mmT mmB container-order-status hide">
 			<div class="block-order-status-ok">
-				<h2 class="mlB">Thank you for order!</h2>
+				<h2 class="mxlB">Thank you for order!</h2>
 				<h4 class="fw1">Order number is: 123123</h4>
 				<small class="mmT">You will receive an email confirmation shortly at abc.xyz@com</small><br />
 				<small class="mmT">You may track your order <a href="#">here</a></small>
 			</div>
 			<div class="block-order-status-fail">
-				<h2 class="mlB">Oops something went wrong!</h2>
+				<h2 class="mxlB">Oops something went wrong!</h2>
 				<small class="fw1">You may trying placing order again or call us at (+49) 176 42971087 to place order on call.</small>
 			</div>
 		</div>
@@ -107,6 +107,7 @@
 				<div class="col-md-6 block-order-bill">
 					<h2 class="pmA txC">Delivery address</h2>
 					<form class="form-horizontal form-delivery">
+						{% csrf_token %}
 						<div class="form-group">
 							<label class="col-sm-2 control-label" for="customer_name">Name</label>
 							<div class="col-sm-10">
