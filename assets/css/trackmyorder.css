@@ -16,11 +16,20 @@
 
 .table > thead > tr > td {
 	font-size: 14px;
+	padding: 10px !important;
 	color: #333;
 }
 
-.table > tbody > tr > .thick-line {
-	border-top: 2px solid;
+.table > tbody > tr > td {
+	font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+    font-size: 14px;
+    line-height: 1.42857;
+    padding: 10px !important;
+    color: rgb(51, 51, 51);
+}
+
+.table > tbody > tr.thick-line {
+	border-top: 1px solid #ccc;
 }
 
 .panel-default {

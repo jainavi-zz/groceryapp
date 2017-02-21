@@ -1,6 +1,8 @@
 from django.db import models
 from django.utils import timezone
 from django.core.validators import RegexValidator, MinValueValidator
+from django.core import serializers
+import json
 
 class Grocery(models.Model):
 	name = models.CharField(
@@ -83,6 +85,13 @@ class OnlineOrder(models.Model):
 		key_set			= set(self.__dict__.keys())
 
 		return essential_set.issubset(key_set)
+
+	def as_json(self):
+		json_data = json.loads(serializers.serialize('json', [self]))
+		return json_data[0]['fields']
+
+	def __str__(self):
+		return str(self.__dict__)
 
 class OrderDescription(models.Model):
 	order_id 	= models.ForeignKey(OnlineOrder)

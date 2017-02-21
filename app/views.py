@@ -141,12 +141,30 @@ def checkout(request):
 	elif request.method == 'POST':
 		return {}
 
+@csrf_exempt
 def trackmyorder(request):
 	if request.method == 'GET':
 		return render_to_response("trackmyorder.html")
 	elif request.method == 'POST':
 		data = json.loads(request.body.decode('utf-8'))
 
-		email = data['email']
+		customer_email = data['email']
 		order_id = data['order_id']
-		return {}
+
+		if customer_email is None or order_id is None:
+			raise SuspiciousOperation('Bad Request!')
+
+		response_data = {
+			'status': 'OK',
+			'errors': [],
+			'data': {}
+		}
+
+		order = OnlineOrder.objects.filter(id=order_id, customer_email=customer_email).first()
+		if order is None:
+			response_data['status'] = 'FAIL'
+			response_data['errors'] = ['We could not find any order with the above parameters']
+		else:
+			response_data['data'] = order.as_json()
+
+		return JsonResponse(response_data)
