@@ -2,7 +2,7 @@
 	width: 65%;
 }
 
-.btn-track-order {
+#btn-track-order {
 	width: 100px;
 }
 
@@ -55,4 +55,8 @@ div .panel-body {
 
 small {
 	font-size: 13px;
+}
+
+.alert-danger {
+	width: 53%;
 }

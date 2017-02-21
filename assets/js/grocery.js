@@ -8,3 +8,11 @@ function getFormData($form) {
 
     return indexed_array;
 }
+
+function getCurrencySymbol(cuurencyCode) {
+	return currencyMapping[cuurencyCode];
+}
+
+var currencyMapping = {
+	'EUR': '€'
+};

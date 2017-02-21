@@ -58,9 +58,11 @@
 				<div class="form-group col-md-5 pnR">
 					<input type="text" name="order_id" class="form-control full-width" placeholder="Order #">
 				</div>
-				<button type="submit" class="btn btn-success  mlL btn-track-order">Track</button>
+				<button type="submit" id="btn-track-order" class="btn btn-success  mlL">
+					Track <img src="{% static 'img/loading.gif' %}" class="msL hidden" alt="">
+				</button>
 			</form>
-			<div class="row row-order-details mlT">
+			<div class="row row-order-details mlT hidden">
 				<div class="col-md-12">
 					<div class="panel panel-default">
 						<div class="panel-heading">
@@ -81,12 +83,6 @@
 									</thead>
 									<tbody>
 										<tr class="thick-line">
-											<td>1234</td>
-											<td class="text-center">Mr. John Doe</td>
-											<td class="text-center">21-02-2017 7:30 PM</td>
-											<td class="text-center">Amsterdam, Netherlands</td>
-											<td class="text-center">Confirmed</td>
-											<td class="text-right">€10.99</td>
 										</tr>
 									</tbody>
 								</table>
@@ -94,6 +90,9 @@
 						</div>
 					</div>
 				</div>
+			</div><!-- row-order-details -->
+			<div class="alert alert-danger mlT hidden">
+				<p class="plL">Sorry! we could not find any orders with the mentioned email and order id</p>
 			</div>
 		</div>
 		<!-- footer -->

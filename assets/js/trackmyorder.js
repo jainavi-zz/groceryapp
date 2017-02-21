@@ -33,6 +33,9 @@ function initFormValidtor() {
 	.on('success.form.bv', function(e) {
 		// Prevent form submission
 		e.preventDefault();
+		$('.alert-danger').addClass('hidden');
+		$('.row-order-details').addClass('hidden');
+		$('#btn-track-order > img').removeClass('hidden');
 		fetchOrderDetails();
 	});
 }
@@ -40,5 +43,31 @@ function initFormValidtor() {
 function fetchOrderDetails() {
 	var form = $('#form-track-order');
 	var payload = getFormData(form);
-	console.log(JSON.stringify(payload));
+	$.ajax({
+		type: 'POST',
+		url: '/trackmyorder',
+		data: JSON.stringify(payload),
+		contentType: 'application/json',
+		dataType: 'json',
+		success: function(response) {
+			$('#btn-track-order > img').addClass('hidden');
+			if (response.status == 'OK') {
+				renderOrderSummary(response.data, payload.order_id);
+			} else {
+				$('.alert-danger').removeClass('hidden');
+			}
+		}
+	});
+}
+
+function renderOrderSummary(data, order_id) {
+	var html = '<td>' + order_id + '</td>' +
+		'<td class="text-center">' + 'Mr. John Doe' + '</td>' +
+		'<td class="text-center">21-02-2017 7:30 PM</td>' +
+		'<td class="text-center">' + data.delivery_address + '</td>' +
+		'<td class="text-center">' + data.status + '</td>' +
+		'<td class="text-right">' + getCurrencySymbol(data.currency_code) + ' ' + parseFloat(data.net_bill).toFixed(2) + '</td>';
+
+	$('tr.thick-line').html(html);
+	$('.row-order-details').removeClass('hidden');
 }
