@@ -14,7 +14,9 @@
 		<!-- //for-mobile-apps -->
 		<link href="{% static 'css/bootstrap.css' %}" rel="stylesheet" type="text/css" media="all" />
 		<link href="{% static 'css/style.css' %}" rel="stylesheet" type="text/css" media="all" />
+		<link href="{% static 'css/grocery.css' %}" rel="stylesheet" type="text/css" media="all" />
 		<link href="{% static 'css/cart.css' %}" rel="stylesheet" type="text/css" media="all" />
+		<link href="{% static 'css/login.css' %}" rel="stylesheet" type="text/css" media="all" />
 		<!-- font-awesome icons -->
 		<link href="{% static 'css/font-awesome.css' %}" rel="stylesheet" type="text/css" media="all" />
 		<!-- //font-awesome icons -->
@@ -74,7 +76,7 @@
 							</div>
 							<div class="form">
 								<h2>Create an account</h2>
-								<form id="singup-form" action="" method="post">
+								<form id="form-singup" action="" method="post">
 									{% csrf_token %}
 									<input type="text" name="name" placeholder="Full name" required>
 									<input type="email" name="email" placeholder="Email Address" required>
@@ -90,19 +92,6 @@
 							<div class="cta"><a href="#">Forgot your password?</a></div>
 						</div>
 					</div>
-					<script>
-						$('.toggle').click(function(){
-						  // Switches the Icon
-						  $(this).children('i').toggleClass('fa-pencil');
-						  // Switches the forms  
-						  $('.form').animate({
-							height: "toggle",
-							'padding-top': 'toggle',
-							'padding-bottom': 'toggle',
-							opacity: "toggle"
-						  }, "slow");
-						});
-					</script>
 				</div>
 				<!-- //login -->
 			</div>
@@ -160,6 +149,30 @@
 			</div>
 		</div>
 		<!-- //newsletter -->
+		<!-- forgot password modal -->
+		<div id="modal-forgot-password" class="modal fade">
+			<div class="modal-dialog" role="document">
+				<div class="modal-content col-md-8">
+					<div class="modal-header">
+						<h3 class="modal-title text-center fw3">Forgot your password?</h3>
+						<button type="button" class="close btn-modal-cart" data-dismiss="modal" aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+						</button>
+					</div>
+					<div class="modal-body mxlT">
+						<p class="text-center">If you have forgotten your password, you can reset it here</p>
+						<form id="form-forgot-password" class="mlT plL plR plB" action="" method="post">
+							<input type="email" name="email" class="form-control fw2 form-widget" placeholder="Email Address" required>
+							<button id="btn-forgot-password" type="submit" class="btn btn-success form-control grocery-green form-widget fw2 mlT">Send My Password</button>
+						</form>
+					</div>
+					<div class="modal-footer">
+						<button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+					</div>
+				</div>
+			</div>
+		</div>
+		<!-- //forgot password modal -->
 		<!-- footer -->
 		{% include "footer.html" %}
 		<!-- //footer -->
