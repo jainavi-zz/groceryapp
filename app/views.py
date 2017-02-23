@@ -10,8 +10,11 @@ from django.http import JsonResponse
 from app.models import Customer
 from app.models import Item
 from app.models import OnlineOrder
+from app.models import ForgotPassword
 from app.utils import prepare_order_description
 import json
+import os
+import binascii
 
 def index(request):
 	return render_to_response("index.html")
@@ -168,3 +171,32 @@ def trackmyorder(request):
 			response_data['data'] = order.as_json()
 
 		return JsonResponse(response_data)
+
+def forgotpassword(request):
+	if request.method == 'POST':
+		email = request.POST['email'].strip()
+
+		response_data = {
+			'status': 'OK',
+			'errors': [],
+			'data': {}
+		}
+
+		if Customer.objects.filter(email=email).exists():
+			access_token = str(binascii.hexlify(os.urandom(20)))
+			attr = {}
+			attr['email'] = email
+			attr['access_token'] = access_token
+			forgot_password = ForgotPassword(**attr)
+			try:
+				forgot_password.save()
+			except Exception, e:
+				response_data['status'] = 'FAIL'
+				response_data['errors'] = [str(e)]
+		else:
+			response_data['status'] = 'FAIL'
+			response_data['errors'] = 'You are not registered with us. Please sign up!'
+
+		return JsonResponse(response_data)
+	else:
+		raise SuspiciousOperation('Bad Request!')

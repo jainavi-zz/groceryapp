@@ -38,6 +38,12 @@ class Customer(models.Model):
 	def __str__(self):
 		return str(self.__dict__)
 
+class ForgotPassword(models.Model):
+	access_token	= models.CharField(max_length=40, unique=True)
+	email 			= models.EmailField(max_length=70)
+	created			= models.DateTimeField(default=timezone.now)
+	is_expired		= models.BooleanField(default=0)
+
 class Item(models.Model):
 	name 		= models.CharField(max_length=150)
 	price 		= models.FloatField(

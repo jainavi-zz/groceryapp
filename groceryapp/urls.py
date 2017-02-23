@@ -24,6 +24,7 @@ urlpatterns = [
 	url(r'^contact/', views.contact, name='contact'),
 	url(r'^login', views.login, name='login'),
     url(r'^signup', views.signup, name='signup'),
+    url(r'^forgotpassword', views.forgotpassword, name='forgotpassword'),
     url(r'^order', views.order, name='order'),
     url(r'^checkout', views.checkout, name='checkout'),
     url(r'^trackmyorder', views.trackmyorder, name='trackmyorder'),
