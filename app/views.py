@@ -1,7 +1,8 @@
 from django import http
 from django.template import loader
-from django.shortcuts import render_to_response
+from django.shortcuts import render_to_response, render
 from django.views.decorators.csrf import csrf_exempt
+from django.views.decorators.csrf import ensure_csrf_cookie
 from django.contrib.auth.hashers import make_password, check_password
 from django.core.exceptions import SuspiciousOperation
 from django.db import transaction
@@ -25,7 +26,7 @@ def contact(request):
 @csrf_exempt
 def login(request):
 	if request.method == 'GET':
-		return render_to_response("login.html")
+		return render(request, "login.html")
 	elif request.method == 'POST':
 		email = request.POST['email'].strip()
 		password = request.POST['password']
@@ -174,7 +175,7 @@ def trackmyorder(request):
 
 def forgotpassword(request):
 	if request.method == 'POST':
-		email = request.POST['email'].strip()
+		email = request.POST.get('email', "").strip()
 
 		response_data = {
 			'status': 'OK',
@@ -189,6 +190,7 @@ def forgotpassword(request):
 			attr['access_token'] = access_token
 			forgot_password = ForgotPassword(**attr)
 			try:
+				ForgotPassword.objects.filter(email=email, is_expired=0).update(is_expired=1)
 				forgot_password.save()
 			except Exception, e:
 				response_data['status'] = 'FAIL'

@@ -136,3 +136,11 @@ hr {
 .fnt-sz-20 {
 	font-size: 20px;
 }
+
+.clr-success {
+	color: #3c763d;
+}
+
+.clr-error {
+	color: #a94442;
+}
