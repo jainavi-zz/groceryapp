@@ -140,3 +140,15 @@ USE_TZ = True
 STATIC_URL = '/static/'
 STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 STATICFILES_DIRS = [os.path.join(ROOT_PATH, '../', 'assets')]
+
+# Massaging Engine
+if 'SERVER_PROD' in os.environ:
+    EMAIL_HOST = 'smtp.sendgrid.net'
+    EMAIL_PORT = 587
+    EMAIL_USE_TLS = True
+    EMAIL_HOST_USER = 'apikey'
+    EMAIL_HOST_PASSWORD = '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'
+else:
+    EMAIL_HOST = 'localhost'
+    EMAIL_PORT = 1025
+    EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'

@@ -12,7 +12,7 @@ from app.models import Customer
 from app.models import Item
 from app.models import OnlineOrder
 from app.models import ForgotPassword
-from app.utils import prepare_order_description
+from app.utils import prepare_order_description, send_reset_password_link
 import json
 import os
 import binascii
@@ -26,7 +26,7 @@ def contact(request):
 @csrf_exempt
 def login(request):
 	if request.method == 'GET':
-		return render(request, "login.html")
+		return render(request, "login.html", {})
 	elif request.method == 'POST':
 		email = request.POST['email'].strip()
 		password = request.POST['password']
@@ -184,7 +184,7 @@ def forgotpassword(request):
 		}
 
 		if Customer.objects.filter(email=email).exists():
-			access_token = str(binascii.hexlify(os.urandom(20)))
+			access_token = str(binascii.hexlify(os.urandom(64)))
 			attr = {}
 			attr['email'] = email
 			attr['access_token'] = access_token
@@ -192,6 +192,10 @@ def forgotpassword(request):
 			try:
 				ForgotPassword.objects.filter(email=email, is_expired=0).update(is_expired=1)
 				forgot_password.save()
+				scheme = 'https' if request.is_secure() else 'http'
+				domain = request.get_host()
+				base_url = scheme + '://' + domain
+				send_reset_password_link(email, access_token, base_url)
 			except Exception, e:
 				response_data['status'] = 'FAIL'
 				response_data['errors'] = [str(e)]
