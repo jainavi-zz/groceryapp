@@ -70,9 +70,30 @@
 	</div>
 </div>
 <!-- Bootstrap Core JavaScript -->
+<script src="{% static 'js/third_party/jquery-1.11.1.min.js' %}"></script>
 <script src="{% static 'js/third_party/bootstrap.min.js' %}"></script>
-<script>
+<script type="text/javascript" src="{% static 'js/move-top.js' %}"></script>
+<script type="text/javascript" src="{% static 'js/easing.js' %}"></script>
+<script type="text/javascript">
 	$(document).ready(function(){
+		/** start-smoth-scrolling **/
+		$(".scroll").click(function(event){
+			event.preventDefault();
+			$('html,body').animate({scrollTop:$(this.hash).offset().top},1000);
+		});
+		/** //start-smoth-scrolling **/
+
+		/**  script-for sticky-nav  **/
+		var navoffeset=$(".agileits_header").offset().top;
+		 $(window).scroll(function(){
+			var scrollpos=$(window).scrollTop();
+			if(scrollpos >=navoffeset){
+				$(".agileits_header").addClass("fixed");
+			}else{
+				$(".agileits_header").removeClass("fixed");
+			}
+		 });
+		 <!-- //script-for sticky-nav -->
 	    $(".dropdown").hover(            
 	        function() {
 	            $('.dropdown-menu', this).stop( true, true ).slideDown("fast");
@@ -83,12 +104,9 @@
 	            $(this).toggleClass('open');       
 	        }
 	    );
-	});
-</script>
-<!-- here stars scrolling icon -->
-<script type="text/javascript">
-	$(document).ready(function() {
-		/*
+
+	    /** here stars scrolling icon **/
+	    /*
 			var defaults = {
 			containerID: 'toTop', // fading element id
 			containerHoverID: 'toTopHover', // fading element hover id
@@ -96,13 +114,11 @@
 			easingType: 'linear' 
 			};
 		*/
-							
 		$().UItoTop({ easingType: 'easeOutQuart' });
-							
-		});
+	});
 </script>
-<!-- //here ends scrolling icon -->
 <script src="{% static 'js/minicart.min.js' %}"></script>
+<script src="{% static 'js/grocery.js' %}"></script>
 <script>
 	// Mini Cart
 	paypal.minicart.render({

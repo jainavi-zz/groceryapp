@@ -40,7 +40,7 @@ $('#form-forgot-password').submit(function(e) {
 
 	$.ajax({
 		type: 'POST',
-		url: '/forgotpassword',
+		url: '/password_forgot',
 		data: $('#form-forgot-password').serialize(),
 		dataType: 'json',
 		success: function(response) {

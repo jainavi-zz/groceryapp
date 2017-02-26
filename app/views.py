@@ -173,7 +173,7 @@ def trackmyorder(request):
 
 		return JsonResponse(response_data)
 
-def forgotpassword(request):
+def password_forgot(request):
 	if request.method == 'POST':
 		email = request.POST.get('email', "").strip()
 
@@ -206,3 +206,8 @@ def forgotpassword(request):
 		return JsonResponse(response_data)
 	else:
 		raise SuspiciousOperation('Bad Request!')
+
+def password_reset(request, access_token):
+	if request.method == 'GET':
+		if is_token_valid(access_token):
+			return render(request, "password_reset.html", {})
