@@ -22,10 +22,11 @@ from app import views
 urlpatterns = [
 	url(r'^$', views.index, name='index'),
 	url(r'^contact/', views.contact, name='contact'),
-	url(r'^login', views.login, name='login'),
+	url(r'^login$', views.login, name='login'),
     url(r'^signup', views.signup, name='signup'),
     url(r'^password_forgot', views.password_forgot, name='password_forgot'),
-    url(r'^password_reset/([A-Za-z0-9]{128})/$', views.password_reset, name='password_reset'),
+    url(r'^password_reset/([A-Za-z0-9]{128})$', views.password_reset, name='password_reset'),
+    url(r'^reset_password$', views.reset_password, name='reset_password'),
     url(r'^order', views.order, name='order'),
     url(r'^checkout', views.checkout, name='checkout'),
     url(r'^trackmyorder', views.trackmyorder, name='trackmyorder'),

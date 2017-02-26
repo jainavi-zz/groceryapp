@@ -209,5 +209,43 @@ def password_forgot(request):
 
 def password_reset(request, access_token):
 	if request.method == 'GET':
-		if is_token_valid(access_token):
-			return render(request, "password_reset.html", {})
+		forgot_password = ForgotPassword.objects.filter(access_token=access_token).first()
+		if forgot_password.is_token_valid():
+			return render(request, "password_reset.html", { 'access_token': access_token })
+	else:
+		raise SuspiciousOperation('Bad Request!')
+
+def reset_password(request):
+	if request.method == 'POST':
+		access_token = request.POST.get('access_token', "").strip()
+		new_password = request.POST.get('new_password')
+
+		response_data = {
+			'status': 'FAIL',
+			'errors': [],
+			'data': {}
+		}
+
+		forgot_password = ForgotPassword.objects.filter(access_token=access_token).first()
+
+		if forgot_password is None:
+			response_data['errors'] = ['Invalid access token']
+		elif forgot_password.is_token_expired():
+			response_data['errors'] = ['The link is expired. Please request a new reset link']
+		elif len(new_password) < 5:
+			response_data['errors'] = ['Password should be at-least 5 characters long']
+		else:
+			try:
+				customer = Customer.objects.get(email=forgot_password.email)
+				customer.password = make_password(new_password)
+				forgot_password.is_expired = 1
+				with transaction.atomic():
+					customer.save()
+					forgot_password.save()
+				response_data['status'] = 'OK'
+			except IntegrityError, e:
+				response_data['errors'] = [str(e)]
+
+		return JsonResponse(response_data)
+	else:
+		raise SuspiciousOperation('Bad Request!')

@@ -44,6 +44,19 @@ class ForgotPassword(models.Model):
 	created			= models.DateTimeField(default=timezone.now)
 	is_expired		= models.BooleanField(default=0)
 
+	def is_token_valid(self):
+		is_token_valid = 1
+
+		if self.is_expired:
+			is_token_valid = 0
+		elif (timezone.now() - self.created).total_seconds() >= 1 * 60 * 60:
+			is_token_valid = 0
+
+		return 1
+
+	def is_token_expired(self):
+		return not is_token_valid(self)
+
 class Item(models.Model):
 	name 		= models.CharField(max_length=150)
 	price 		= models.FloatField(
