@@ -147,7 +147,7 @@ if 'SERVER_PROD' in os.environ:
     EMAIL_PORT = 587
     EMAIL_USE_TLS = True
     EMAIL_HOST_USER = 'apikey'
-    EMAIL_HOST_PASSWORD = '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'
+    EMAIL_HOST_PASSWORD = '*****'
 else:
     EMAIL_HOST = 'localhost'
     EMAIL_PORT = 1025
