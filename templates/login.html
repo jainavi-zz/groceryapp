@@ -139,7 +139,11 @@
 			<div class="modal-dialog" role="document">
 				<div class="modal-content col-md-8">
 					<div class="modal-header">
-						<h3 class="modal-title text-center fw3">Forgot your password?</h3>
+						{% if link_expired %}
+							<h3 class="modal-title text-center clr-error fw3">The link has expired. Please try again!</h3>
+						{% else %}
+							<h3 class="modal-title text-center fw3">Forgot your password?</h3>
+						{% endif %}
 						<button type="button" class="close btn-modal-cart" data-dismiss="modal" aria-label="Close">
 						<span aria-hidden="true">&times;</span>
 						</button>
@@ -166,6 +170,14 @@
 		<!-- custom JS-->
 		<script src="{% static 'js/cart.js' %}"></script>
 		<script src="{% static 'js/login.js' %}"></script>
+		{% if link_expired %}
+			<script type="text/javascript">
+				// show the password reset popup
+				$(document).ready(function(e) {
+					$('.cta a').click();
+				});
+			</script>
+		{% endif %}
 		<!-- //custom JS-->
 	</body>
 </html>

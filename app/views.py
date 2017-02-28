@@ -23,7 +23,6 @@ def index(request):
 def contact(request):
 	return render_to_response("contact.html")
 
-@csrf_exempt
 def login(request):
 	if request.method == 'GET':
 		return render(request, "login.html", {})
@@ -53,7 +52,6 @@ def login(request):
 	else:
 		raise SuspiciousOperation('Bad Request!')
 
-@csrf_exempt
 def signup(request):
 	if request.method == 'POST':
 		response_data = {
@@ -212,6 +210,8 @@ def password_reset(request, access_token):
 		forgot_password = ForgotPassword.objects.filter(access_token=access_token).first()
 		if forgot_password.is_token_valid():
 			return render(request, "password_reset.html", { 'access_token': access_token })
+		else:
+			return render(request, "login.html", { 'link_expired': 1 })
 	else:
 		raise SuspiciousOperation('Bad Request!')
 

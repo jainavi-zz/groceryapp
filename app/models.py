@@ -52,7 +52,7 @@ class ForgotPassword(models.Model):
 		elif (timezone.now() - self.created).total_seconds() >= 1 * 60 * 60:
 			is_token_valid = 0
 
-		return 1
+		return is_token_valid
 
 	def is_token_expired(self):
 		return not is_token_valid(self)
