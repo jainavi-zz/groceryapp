@@ -143,11 +143,11 @@ STATICFILES_DIRS = [os.path.join(ROOT_PATH, '../', 'assets')]
 
 # Massaging Engine
 if 'SERVER_PROD' in os.environ:
-    EMAIL_HOST = 'smtp.sendgrid.net'
+    EMAIL_HOST = os.environ['EMAIL_HOST']
     EMAIL_PORT = 587
     EMAIL_USE_TLS = True
-    EMAIL_HOST_USER = 'apikey'
-    EMAIL_HOST_PASSWORD = '*****'
+    EMAIL_HOST_USER = os.environ['EMAIL_HOST_USER']
+    EMAIL_HOST_PASSWORD = os.environ['EMAIL_HOST_PASSWORD']
 else:
     EMAIL_HOST = 'localhost'
     EMAIL_PORT = 1025
