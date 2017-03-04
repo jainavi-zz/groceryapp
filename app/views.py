@@ -13,6 +13,7 @@ from app.models import Item
 from app.models import OnlineOrder
 from app.models import ForgotPassword
 from app.utils import prepare_order_description, send_reset_password_link
+from app.search import solr_search_items
 import json
 import os
 import binascii
@@ -245,6 +246,20 @@ def reset_password(request):
 				response_data['status'] = 'OK'
 			except IntegrityError, e:
 				response_data['errors'] = [str(e)]
+
+		return JsonResponse(response_data)
+	else:
+		raise SuspiciousOperation('Bad Request!')
+
+def search_items(request):
+	if request.method == 'GET':
+		query = request.GET.get('query', '')
+		result = solr_search_items(query)
+
+		response_data = {
+			'status': 'OK',
+			'data': result
+		}
 
 		return JsonResponse(response_data)
 	else:
