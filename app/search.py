@@ -10,8 +10,8 @@ def solr_search_items(query):
 
 	for result in results:
 		suggestion = {
-			'id': result['id'],
-			'title': result['text_auto'][0]
+			'item_id': result['id'],
+			'item_name': result['text_auto'][0]
 		}
 		suggestions.append(suggestion)
 

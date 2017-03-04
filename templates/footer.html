@@ -72,6 +72,7 @@
 <!-- Bootstrap Core JavaScript -->
 <script src="{% static 'js/third_party/jquery-1.11.1.min.js' %}"></script>
 <script src="{% static 'js/third_party/bootstrap.min.js' %}"></script>
+<script src="{% static 'js/third_party/bootstrap-typeahead.min.js' %}"></script>
 <script type="text/javascript" src="{% static 'js/move-top.js' %}"></script>
 <script type="text/javascript" src="{% static 'js/easing.js' %}"></script>
 <script type="text/javascript">
@@ -115,6 +116,31 @@
 			};
 		*/
 		$().UItoTop({ easingType: 'easeOutQuart' });
+
+		// Item search autocomplete
+		$('#item_search').typeahead({
+			ajax: {
+				url: 'search/items/autocomplete',
+				method: 'get',
+				timeout: 500,
+				triggerLength: 3,
+				displayField: 'item_name',
+				val: 'item_id',
+				preDispatch: function (query) {
+					$('#item_search').addClass('typeahead-circle');
+					return {
+						query: '*' + query + '*'
+					}
+				},
+				preProcess: function (data) {
+					$('#item_search').removeClass('typeahead-circle');
+					if (data.status === 'FAIL') {
+						return false;
+					}
+					return data.data;
+				}
+			}
+		});
 	});
 </script>
 <script src="{% static 'js/minicart.min.js' %}"></script>
