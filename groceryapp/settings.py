@@ -100,15 +100,6 @@ else:
         }
     }
 
-
-# Search Engine
-# HAYSTACK_CONNECTIONS = {
-#     'default': {
-#         'ENGINE': 'haystack.backends.solr_backend.SolrEngine',
-#         'URL': 'http://localhost:8983/solr/default'
-#     }
-# }
-
 # Password validation
 # https://docs.djangoproject.com/en/1.9/ref/settings/#auth-password-validators
 
