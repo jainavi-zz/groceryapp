@@ -77,7 +77,7 @@ WSGI_APPLICATION = 'groceryapp.wsgi.application'
 
 # Database
 # https://docs.djangoproject.com/en/1.9/ref/settings/#databases
-if 'RDS_HOSTNAME' in os.environ:
+if 'SERVER_PROD' in os.environ:
     DATABASES = {
         'default': {
             'ENGINE': 'django.db.backends.mysql',
@@ -99,6 +99,12 @@ else:
             'PORT': '',
         }
     }
+
+#SOLR Configurations
+if 'SERVER_PROD' in os.environ:
+    SOLR_CONN = os.environ['SOLR_CONN']
+else:
+    SOLR_CONN = 'http://localhost:8983/solr/default/'
 
 # Password validation
 # https://docs.djangoproject.com/en/1.9/ref/settings/#auth-password-validators
