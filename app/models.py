@@ -1,4 +1,7 @@
 from django.db import models
+from django.contrib.auth.models import User
+from django.db.models.signals import post_save
+from django.dispatch import receiver
 from django.utils import timezone
 from django.core.validators import RegexValidator, MinValueValidator
 from django.core import serializers
@@ -17,6 +20,35 @@ class Grocery(models.Model):
 
 	def __str__(self):
 		self.name
+
+class UserProfile(models.Model):
+	user 		= models.OneToOneField(User, on_delete=models.CASCADE)
+	name 		= models.CharField(max_length=50)
+	phone 		= models.CharField(max_length=12, validators=[
+					RegexValidator(regex='^.{12}$', message='Invalid phone number')
+				], unique=True)
+	street 		= models.CharField(max_length=70)
+	house 		= models.CharField(max_length=5, blank=True)
+	city 		= models.CharField(max_length=50)
+	postal_code = models.CharField(max_length=10)
+
+	def clean(self):
+		for field in ['name', 'phone', 'street', 'city', 'postal_code']:
+			val = getattr(self, field)
+			if val: setattr(self, field, val.strip())
+		return self
+
+	@receiver(post_save, sender=User)
+	def create_user_profile(sender, instance, created, **kwargs):
+		if created:
+			UserProfile.objects.create(user=instance, **instance.user_profile_data)
+
+	@receiver(post_save, sender=User)
+	def save_user_profile(sender, instance, **kwargs):
+		instance.userprofile.save()
+
+	def __str__(self):
+		return str(self.__dict__)
 
 class Customer(models.Model):
 	name 		= models.CharField(max_length=50)

@@ -40,3 +40,9 @@ def send_reset_password_link(email, access_token, base_url):
 	email = EmailMessage(subject, body, from_email, to_email, reply_to=reply_to)
 	email.content_subtype = "html"
 	email.send()
+
+def strip_dict_data(data):
+	for key, val in data.iteritems():
+		data[key] = val.strip()
+
+	return data

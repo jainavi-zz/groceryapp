@@ -1,18 +1,19 @@
 from django import http
 from django.template import loader
 from django.shortcuts import render_to_response, render
-from django.views.decorators.csrf import csrf_exempt
-from django.views.decorators.csrf import ensure_csrf_cookie
+from django.views.decorators.csrf import csrf_exempt, ensure_csrf_cookie
+from django.contrib.auth import authenticate, login as auth_login
 from django.contrib.auth.hashers import make_password, check_password
 from django.core.exceptions import SuspiciousOperation
 from django.db import transaction
 from django.db import IntegrityError
 from django.http import JsonResponse
-from app.models import Customer
+from django.contrib.auth.models import User
+from app.models import Customer, UserProfile
 from app.models import Item
 from app.models import OnlineOrder
 from app.models import ForgotPassword
-from app.utils import prepare_order_description, send_reset_password_link
+import app.utils as utils
 from app.search import solr_search_items
 import json
 import os
@@ -28,10 +29,9 @@ def login(request):
 	if request.method == 'GET':
 		return render(request, "login.html", {})
 	elif request.method == 'POST':
-		email = request.POST['email'].strip()
-		password = request.POST['password']
-
-		customer = Customer.objects.get(email=email)
+		data = request.POST.dict()
+		username = data['username'].strip()
+		password = data['password']
 
 		response_data = {
 			'status': "OK",
@@ -39,20 +39,20 @@ def login(request):
 			'data': {}
 		}
 
-		if customer is None:
+		user = authenticate(username=username, password=password)
+
+		if user is None:
 			response_data['status'] = 'FAIL'
-			response_data['errors'] = 'Invalid email id!'
-		elif check_password(password, customer.password) == False:
-			response_data['status'] = 'FAIL'
-			response_data['errors'] = 'Invalid password!'
+			response_data['errors'] = 'Invalid email or password!'
 		else:
-			response_data['data'] = str(customer)
+			auth_login(request, user)
+			response_data['data'] = str(user.userprofile)
 
 		return JsonResponse(response_data)
-
 	else:
 		raise SuspiciousOperation('Bad Request!')
 
+@transaction.atomic
 def signup(request):
 	if request.method == 'POST':
 		response_data = {
@@ -60,12 +60,19 @@ def signup(request):
 			'errors': [],
 			'data': {}
 		}
+
 		data = request.POST.dict()
-		data['password'] = make_password(data['password'])
-		customer = Customer(**data)
-		customer.clean()
+
+		email = data['email'].strip()
+		password = make_password(data['password'])
+
+		# Removing unwanted fields to create profile object
+		[ data.pop(key, None) for key in ['email', 'password', 'csrfmiddlewaretoken'] ]
+
+		user = User(username=email, password=password)
+		user.user_profile_data = utils.strip_dict_data(data)
 		try:
-			customer.save()
+			user.save()
 		except Exception, e:
 			response_data['status'] = 'FAIL'
 			response_data['errors'] = [str(e)]
@@ -107,7 +114,7 @@ def order(request):
 				raise SuspiciousOperation(description['item_id'] + ' does not exist!')
 
 			description['item_id'] = item
-			order_description = prepare_order_description(description, sequence)
+			order_description = utils.prepare_order_description(description, sequence)
 			if order_description is None:
 				raise SuspiciousOperation('Bad Request!')
 
@@ -194,7 +201,7 @@ def password_forgot(request):
 				scheme = 'https' if request.is_secure() else 'http'
 				domain = request.get_host()
 				base_url = scheme + '://' + domain
-				send_reset_password_link(email, access_token, base_url)
+				utils.send_reset_password_link(email, access_token, base_url)
 			except Exception, e:
 				response_data['status'] = 'FAIL'
 				response_data['errors'] = [str(e)]
