@@ -87,7 +87,7 @@ class ForgotPassword(models.Model):
 		return is_token_valid
 
 	def is_token_expired(self):
-		return not is_token_valid(self)
+		return not self.is_token_valid()
 
 class Item(models.Model):
 	name 		= models.CharField(max_length=150)

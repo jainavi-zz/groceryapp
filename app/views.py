@@ -9,7 +9,7 @@ from django.db import transaction
 from django.db import IntegrityError
 from django.http import JsonResponse
 from django.contrib.auth.models import User
-from app.models import Customer, UserProfile
+from app.models import UserProfile
 from app.models import Item
 from app.models import OnlineOrder
 from app.models import ForgotPassword
@@ -189,7 +189,7 @@ def password_forgot(request):
 			'data': {}
 		}
 
-		if Customer.objects.filter(email=email).exists():
+		if User.objects.filter(username=email).exists():
 			access_token = str(binascii.hexlify(os.urandom(64)))
 			attr = {}
 			attr['email'] = email
@@ -244,11 +244,11 @@ def reset_password(request):
 			response_data['errors'] = ['Password should be at-least 5 characters long']
 		else:
 			try:
-				customer = Customer.objects.get(email=forgot_password.email)
-				customer.password = make_password(new_password)
+				user = User.objects.get(username=forgot_password.email)
+				user.password = make_password(new_password)
 				forgot_password.is_expired = 1
 				with transaction.atomic():
-					customer.save()
+					user.save()
 					forgot_password.save()
 				response_data['status'] = 'OK'
 			except IntegrityError, e:
