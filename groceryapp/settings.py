@@ -24,7 +24,7 @@ SECRET_KEY = '!*)(3d%7%@0@82($_2#cm)$fgle_2%l2we%uqjldgs3$5m2oi('
 
 # SECURITY WARNING: don't run with debug turned on in production!
 if 'SERVER_PROD' in os.environ:
-    DEBUG = False
+    DEBUG = True
 else:
     DEBUG = True
 
