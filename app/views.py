@@ -1,23 +1,26 @@
+import os
+import json
+import binascii
+import app.utils as utils
+
 from django import http
-from django.template import loader
-from django.shortcuts import render_to_response, render
-from django.views.decorators.csrf import csrf_exempt, ensure_csrf_cookie
-from django.contrib.auth import authenticate, login as auth_login
-from django.contrib.auth.hashers import make_password, check_password
-from django.core.exceptions import SuspiciousOperation
 from django.db import transaction
 from django.db import IntegrityError
+from django.template import loader
 from django.http import JsonResponse
+from django.shortcuts import render_to_response, render
+from django.views.decorators.csrf import csrf_exempt, ensure_csrf_cookie
+from django.contrib.auth import authenticate, login as auth_login, logout
 from django.contrib.auth.models import User
+from django.contrib.auth.hashers import make_password, check_password
+from django.contrib.auth.decorators import login_required
+from django.core.exceptions import SuspiciousOperation
+
 from app.models import UserProfile
 from app.models import Item
 from app.models import OnlineOrder
 from app.models import ForgotPassword
-import app.utils as utils
 from app.search import solr_search_items
-import json
-import os
-import binascii
 
 def index(request):
 	return render_to_response("index.html")
@@ -77,6 +80,28 @@ def signup(request):
 			response_data['status'] = 'FAIL'
 			response_data['errors'] = [str(e)]
 		return JsonResponse(response_data)
+	else:
+		raise SuspiciousOperation('Bad Request!')
+
+@login_required
+def profile(request):
+	if request.method == 'GET':
+		user = request.user
+
+		data = {
+			'name':			user.userprofile.name,
+			'email':		user.username,
+			'phone':		user.userprofile.phone,
+			'street':		user.userprofile.street,
+			'house':		user.userprofile.house,
+			'city':			user.userprofile.city,
+			'postal_code':	user.userprofile.postal_code
+		}
+
+		if request.is_ajax():
+			return JsonResponse(data)
+		else:
+			return render(request, "profile.html", data)
 	else:
 		raise SuspiciousOperation('Bad Request!')
 

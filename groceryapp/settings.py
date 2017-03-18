@@ -74,6 +74,8 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'groceryapp.wsgi.application'
 
+# Login URL
+LOGIN_URL = '/login'
 
 # Database
 # https://docs.djangoproject.com/en/1.9/ref/settings/#databases
