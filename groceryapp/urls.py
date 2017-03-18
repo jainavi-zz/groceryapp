@@ -17,7 +17,7 @@ from django.conf.urls import url, include
 from django.contrib import admin
 from django.conf import settings
 from django.conf.urls.static import static
-from app import views
+from app import views, admin_views
 
 urlpatterns = [
 	url(r'^$', views.index, name='index'),
@@ -32,5 +32,6 @@ urlpatterns = [
     url(r'^checkout$', views.checkout, name='checkout'),
     url(r'^trackmyorder$', views.trackmyorder, name='trackmyorder'),
     url(r'^search/items/autocomplete', views.search_items, name='search_items'),
+    url(r'^admin/test$', admin_views.test, name='test'),
     url(r'^admin/', admin.site.urls),
 ] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
