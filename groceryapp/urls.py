@@ -32,6 +32,5 @@ urlpatterns = [
     url(r'^checkout$', views.checkout, name='checkout'),
     url(r'^trackmyorder$', views.trackmyorder, name='trackmyorder'),
     url(r'^search/items/autocomplete', views.search_items, name='search_items'),
-    # url(r'^search/', include('haystack.urls')),
     url(r'^admin/', admin.site.urls),
 ] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)

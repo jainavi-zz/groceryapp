@@ -23,10 +23,10 @@ from app.models import ForgotPassword
 from app.search import solr_search_items
 
 def index(request):
-	return render_to_response("index.html")
+	return render(request, "index.html", {})
 
 def contact(request):
-	return render_to_response("contact.html")
+	return render(request, "contact.html", {})
 
 def login(request):
 	if request.method == 'GET':
