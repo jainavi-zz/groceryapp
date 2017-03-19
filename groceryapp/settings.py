@@ -28,7 +28,7 @@ if 'SERVER_PROD' in os.environ:
 else:
     DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['groceryapp-env.yrbsf4zmne.us-east-1.elasticbeanstalk.com']
 
 
 # Application definition
