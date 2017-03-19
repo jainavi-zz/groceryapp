@@ -37,3 +37,9 @@ function csrfSafeMethod(method) {
     // these HTTP methods do not require CSRF protection
     return (/^(GET|HEAD|OPTIONS|TRACE)$/.test(method));
 }
+
+function scrollToDiv(id) {
+    $('html, body').animate({
+        scrollTop: $("#" + id).offset().top
+    }, 1000);
+}

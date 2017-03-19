@@ -109,6 +109,10 @@
 	text-align: center;
 }
 
+.txt-clr-white {
+	color: #ffffff;
+}
+
 hr {
 	border-top: 1px solid #ccc;
 }
